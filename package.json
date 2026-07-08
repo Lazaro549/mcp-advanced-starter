@@ -1,0 +1,37 @@
+{
+  "name": "mcp-advanced-starter",
+  "version": "0.1.0",
+  "description": "DevNotes MCP — a small notes server demonstrating the advanced Model Context Protocol features (sampling, elicitation, roots, notifications, resumable transport, structured output, pagination, OAuth 2.1 authorization). Built as a follow-up to Anthropic Academy's MCP: Advanced Topics course.",
+  "type": "module",
+  "private": true,
+  "author": "Lazaro Gomez Vitolo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start:stdio": "tsx src/server/stdio.ts",
+    "start:http": "tsx src/server/http.ts",
+    "start:http:oauth": "tsx src/server/http.ts --oauth",
+    "start:http:oauth-strict": "tsx src/server/http.ts --oauth --oauth-strict",
+    "start:http:stateless": "tsx src/server/http.ts --stateless",
+    "client": "tsx src/client/interactiveClient.ts",
+    "client:http": "tsx src/client/interactiveClient.ts --http",
+    "inspector": "npx @modelcontextprotocol/inspector tsx src/server/stdio.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.22.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.0",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3"
+  }
+}
