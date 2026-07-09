@@ -175,6 +175,13 @@ Part of a series built while working through [Anthropic Academy](https://anthrop
 3. **`mcp-advanced-starter`** — MCP: Advanced Topics *(this repo)*
 4. Claude Code in Action — next up
 
+## 💸 Donations
+
+- 🇦🇷 ARS (Argentina)
+  Alias: `lazaro.503.alaba.mp`
+- 🌎 USD (local transfers within Argentina only)
+  Alias: `ahogada.duras.foca`
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
