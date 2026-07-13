@@ -171,9 +171,8 @@ assets/                   the certificate this repo is a follow-up to
 Part of a series built while working through [Anthropic Academy](https://anthropic.skilljar.com/):
 
 1. [`claude-api-starter`](https://github.com/Lazaro549/claude-api-starter) — Building with the Claude API
-2. [`mcp-client-starter`](https://github.com/Lazaro549/mcp-client-starter) — Introduction to Model Context Protocol
-3. **`mcp-advanced-starter`** — MCP: Advanced Topics *(this repo)*
-4. Claude Code in Action — next up
+2. **`mcp-advanced-starter`** — MCP: Advanced Topics *(this repo)*
+3. Claude Code in Action — next up
 
 ## 💸 Donations
 
