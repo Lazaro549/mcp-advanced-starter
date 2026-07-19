@@ -172,7 +172,7 @@ Part of a series built while working through [Anthropic Academy](https://anthrop
 
 1. [`claude-api-starter`](https://github.com/Lazaro549/claude-api-starter) — Building with the Claude API
 2. **`mcp-advanced-starter`** — MCP: Advanced Topics *(this repo)*
-3. Claude Code in Action — next up
+3. [`claude-code-starter`](https://github.com/lazaro549/claude-code-starter) — Claude Code in Action
 
 ## 💸 Donations
 
