@@ -19,7 +19,10 @@
     "client:http": "tsx src/client/interactiveClient.ts --http",
     "inspector": "npx @modelcontextprotocol/inspector tsx src/server/stdio.ts",
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "evaluate": "python evaluation/runners/run_eval.py"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
@@ -31,7 +34,9 @@
     "@modelcontextprotocol/inspector": "^0.22.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.0",
+    "@vitest/coverage-v8": "^4.1.11",
     "tsx": "^4.23.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.11"
   }
 }
