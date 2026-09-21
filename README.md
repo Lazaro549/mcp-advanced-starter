@@ -7,7 +7,7 @@
 Follow-up project for Anthropic Academy's *Model Context Protocol: Advanced Topics* course.
 
 <img src="assets/certificate.png" alt="Certificate of completion — Model Context Protocol: Advanced Topics — Lazaro Gomez Vitolo" width="600">
-<img src="client.png" width="940" Height="200 ">
+<img src="assets/client.png" width="940" Height="200 ">
 
 </div>
 
@@ -131,6 +131,24 @@ exactly what it does and doesn't do — it's a real OAuth 2.1 authorization serv
 intentionally minimal one (in-memory storage, no real login screen); the same file explains
 what a production deployment needs to add back.
 
+## Testing & Performance
+
+Run the deterministic local test suite with `npm test`, or collect coverage with
+`npm run test:coverage`. No Anthropic credentials are needed for normal tests.
+
+Run reproducible measurements against the real servers with `npm run benchmark:transport`,
+`npm run benchmark:concurrency`, or both with `npm run benchmark`. Raw JSON is written to
+`benchmarks/results/`; the methodology and generated tables live in
+[`benchmarks/results.md`](benchmarks/results.md). Results depend on the local machine and
+runtime. The benchmark workload is an MCP initialize exchange so it remains deterministic
+and does not require external model calls; stateless HTTP is intentionally measured as an
+independent request because its transport is recreated for every POST.
+
+The recorded local run completed 58 tests with no failures. Its transport measurements were
+1.22 requests/sec for stdio, 144.42 for stateful HTTP, and 169.86 for stateless HTTP. At
+concurrency 100, stateful HTTP reached 372.49 requests/sec with a 257.89 ms p99 latency and
+0% errors. These figures are reference measurements, not production capacity guarantees.
+
 ## 📁 Project structure
 
 ```
@@ -149,6 +167,10 @@ src/
       indexRoots.ts        roots + progress/logging notifications
   client/
     interactiveClient.ts  demo client: implements the handlers a server can call back into
+benchmarks/
+  transport_benchmark.ts  compares stdio, stateful HTTP, and stateless HTTP
+  concurrency_benchmark.ts measures stateful HTTP under increasing concurrency
+  results.md              methodology, measured tables, interpretation, and limitations
 examples/                sample notes for the index-roots demo
 assets/                   the certificate this repo is a follow-up to
 ```

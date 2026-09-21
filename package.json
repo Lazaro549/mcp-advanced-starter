@@ -21,7 +21,11 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
+    "benchmark:transport": "tsx benchmarks/transport_benchmark.ts",
+    "benchmark:concurrency": "tsx benchmarks/concurrency_benchmark.ts",
+    "benchmark": "npm run benchmark:transport && npm run benchmark:concurrency",
     "evaluate": "python evaluation/runners/run_eval.py"
   },
   "dependencies": {
