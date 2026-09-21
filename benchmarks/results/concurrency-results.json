@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "timestamp": "2026-09-21T22:24:15.411Z",
+    "nodeVersion": "v22.18.0",
+    "operatingSystem": "win32 10.0.19045 (x64)",
+    "cpu": "Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz",
+    "configuration": {
+      "transport": "stateful Streamable HTTP",
+      "concurrencyLevels": [
+        1,
+        10,
+        25,
+        50,
+        100
+      ],
+      "percentileMethod": "nearest-rank (ceil(p/100 * n) - 1, clamped)"
+    },
+    "iterationCount": 186,
+    "workload": "Concurrent MCP initialize requests against the stateful Streamable HTTP server; no external model calls."
+  },
+  "results": [
+    {
+      "concurrency": 1,
+      "metrics": {
+        "totalRequests": 1,
+        "successfulRequests": 1,
+        "failedRequests": 0,
+        "requestsPerSecond": 26.523440090179783,
+        "averageLatencyMs": 37.56940000000009,
+        "p50LatencyMs": 37.56940000000009,
+        "p95LatencyMs": 37.56940000000009,
+        "p99LatencyMs": 37.56940000000009,
+        "minimumLatencyMs": 37.56940000000009,
+        "maximumLatencyMs": 37.56940000000009,
+        "errorRate": 0,
+        "errors": []
+      }
+    },
+    {
+      "concurrency": 10,
+      "metrics": {
+        "totalRequests": 10,
+        "successfulRequests": 10,
+        "failedRequests": 0,
+        "requestsPerSecond": 177.69943207261466,
+        "averageLatencyMs": 52.77282999999998,
+        "p50LatencyMs": 52.44419999999991,
+        "p95LatencyMs": 54.01469999999995,
+        "p99LatencyMs": 54.01469999999995,
+        "minimumLatencyMs": 51.82499999999982,
+        "maximumLatencyMs": 54.01469999999995,
+        "errorRate": 0,
+        "errors": []
+      }
+    },
+    {
+      "concurrency": 25,
+      "metrics": {
+        "totalRequests": 25,
+        "successfulRequests": 25,
+        "failedRequests": 0,
+        "requestsPerSecond": 323.5353876536313,
+        "averageLatencyMs": 58.01306399999998,
+        "p50LatencyMs": 70.73519999999985,
+        "p95LatencyMs": 72.08719999999994,
+        "p99LatencyMs": 72.34320000000002,
+        "minimumLatencyMs": 33.57940000000008,
+        "maximumLatencyMs": 72.34320000000002,
+        "errorRate": 0,
+        "errors": []
+      }
+    },
+    {
+      "concurrency": 50,
+      "metrics": {
+        "totalRequests": 50,
+        "successfulRequests": 50,
+        "failedRequests": 0,
+        "requestsPerSecond": 344.6535955641708,
+        "averageLatencyMs": 111.97375399999997,
+        "p50LatencyMs": 99.37020000000007,
+        "p95LatencyMs": 138.8612999999998,
+        "p99LatencyMs": 138.92070000000012,
+        "minimumLatencyMs": 94.55309999999986,
+        "maximumLatencyMs": 138.92070000000012,
+        "errorRate": 0,
+        "errors": []
+      }
+    },
+    {
+      "concurrency": 100,
+      "metrics": {
+        "totalRequests": 100,
+        "successfulRequests": 100,
+        "failedRequests": 0,
+        "requestsPerSecond": 372.4859526235117,
+        "averageLatencyMs": 189.402974,
+        "p50LatencyMs": 215.25999999999976,
+        "p95LatencyMs": 256.86389999999983,
+        "p99LatencyMs": 257.89440000000013,
+        "minimumLatencyMs": 137.86029999999982,
+        "maximumLatencyMs": 257.94320000000016,
+        "errorRate": 0,
+        "errors": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "timestamp": "2026-09-21T22:24:05.676Z",
+    "nodeVersion": "v22.18.0",
+    "operatingSystem": "win32 10.0.19045 (x64)",
+    "cpu": "Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz",
+    "configuration": {
+      "transports": [
+        "stdio",
+        "stateful HTTP",
+        "stateless HTTP"
+      ],
+      "ports": {
+        "stateful": 3100,
+        "stateless": 3101
+      },
+      "percentileMethod": "nearest-rank (ceil(p/100 * n) - 1, clamped)"
+    },
+    "iterationCount": 20,
+    "workload": "One MCP initialize request per measured operation; no external model calls."
+  },
+  "results": [
+    {
+      "transport": "stdio",
+      "metrics": {
+        "totalRequests": 20,
+        "successfulRequests": 20,
+        "failedRequests": 0,
+        "requestsPerSecond": 1.2177031485943304,
+        "averageLatencyMs": 821.20903,
+        "p50LatencyMs": 816.7526,
+        "p95LatencyMs": 838.6455000000005,
+        "p99LatencyMs": 855.8611000000001,
+        "minimumLatencyMs": 806.6305000000011,
+        "maximumLatencyMs": 855.8611000000001,
+        "errorRate": 0,
+        "errors": []
+      }
+    },
+    {
+      "transport": "stateful HTTP",
+      "metrics": {
+        "totalRequests": 20,
+        "successfulRequests": 20,
+        "failedRequests": 0,
+        "requestsPerSecond": 144.4151763020464,
+        "averageLatencyMs": 6.923364999999649,
+        "p50LatencyMs": 4.770999999997002,
+        "p95LatencyMs": 10.254000000000815,
+        "p99LatencyMs": 39.928899999998976,
+        "minimumLatencyMs": 3.242099999999482,
+        "maximumLatencyMs": 39.928899999998976,
+        "errorRate": 0,
+        "errors": []
+      }
+    },
+    {
+      "transport": "stateless HTTP",
+      "metrics": {
+        "totalRequests": 20,
+        "successfulRequests": 20,
+        "failedRequests": 0,
+        "requestsPerSecond": 169.85715013673618,
+        "averageLatencyMs": 5.886300000000665,
+        "p50LatencyMs": 4.305899999999383,
+        "p95LatencyMs": 6.976400000003196,
+        "p99LatencyMs": 33.85989999999947,
+        "minimumLatencyMs": 2.8258000000023458,
+        "maximumLatencyMs": 33.85989999999947,
+        "errorRate": 0,
+        "errors": []
+      }
+    }
+  ]
+}
