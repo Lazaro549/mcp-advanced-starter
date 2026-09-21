@@ -7,7 +7,7 @@
 Follow-up project for Anthropic Academy's *Model Context Protocol: Advanced Topics* course.
 
 <img src="assets/certificate.png" alt="Certificate of completion — Model Context Protocol: Advanced Topics — Lazaro Gomez Vitolo" width="600">
-<img src="client.png" width="600">
+<img src="client.png" width="940" Height="200 ">
 
 </div>
 
