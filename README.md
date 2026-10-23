@@ -2,6 +2,12 @@
 
 # 🗒️ DevNotes MCP
 
+[![CI](https://github.com/Lazaro549/mcp-advanced-starter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Lazaro549/mcp-advanced-starter/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-Vitest%20V8-informational)](https://github.com/Lazaro549/mcp-advanced-starter/actions/workflows/ci.yml)
+[![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A520-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![MCP SDK](https://img.shields.io/badge/MCP%20SDK-%5E1.29.0-blue)](https://www.npmjs.com/package/@modelcontextprotocol/sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **A notes server built to exercise every advanced feature of the Model Context Protocol.**
 
 Follow-up project for Anthropic Academy's *Model Context Protocol: Advanced Topics* course.

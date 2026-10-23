@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "DevNotes MCP — a small notes server demonstrating the advanced Model Context Protocol features (sampling, elicitation, roots, notifications, resumable transport, structured output, pagination, OAuth 2.1 authorization). Built as a follow-up to Anthropic Academy's MCP: Advanced Topics course.",
   "type": "module",
-  "private": true,
   "author": "Lazaro Gomez Vitolo",
   "license": "MIT",
   "engines": {
@@ -26,21 +25,7 @@
     "benchmark:transport": "tsx benchmarks/transport_benchmark.ts",
     "benchmark:concurrency": "tsx benchmarks/concurrency_benchmark.ts",
     "benchmark": "npm run benchmark:transport && npm run benchmark:concurrency",
-    "evaluate": "python evaluation/runners/run_eval.py"
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.110.0",
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "express": "^5.2.1",
-    "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@modelcontextprotocol/inspector": "^0.22.0",
-    "@types/express": "^5.0.6",
-    "@types/node": "^26.1.0",
-    "@vitest/coverage-v8": "^4.1.11",
-    "tsx": "^4.23.0",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.11"
+    "evaluate": "python evaluation/runners/run_eval.py",
+    "prepack": "npm run typecheck && npm test"
   }
 }
