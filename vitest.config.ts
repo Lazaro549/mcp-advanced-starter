@@ -13,5 +13,12 @@ export default defineConfig({
     testTimeout: 10000,
     pool: "forks",
     execArgv: ["--import", "tsx/esm"],
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.ts"],
+      exclude: ["src/**/*.d.ts"],
+      reporter: ["text", "html", "lcov", "json-summary"],
+      reportsDirectory: "coverage",
+    },
   },
 });
