@@ -9,7 +9,7 @@ describe("InMemoryEventStore", () => {
     await store.storeEvent("stream-b", { jsonrpc: "2.0", method: "notifications/message" });
 
     const replayed: string[] = [];
-    const stream = await store.replayEventsAfter(first, async (id) => { replayed.push(id); });
+    const stream = await store.replayEventsAfter(first, { send: async (id) => { replayed.push(id); } });
     expect(stream).toBe("stream-a");
     expect(replayed).toEqual([second]);
   });
