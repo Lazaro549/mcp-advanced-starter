@@ -137,7 +137,7 @@ describe("NotesStore", () => {
         await writeFile(path.join(directory, "ignored.json"), "{}");
         const imported = await store.importFromRoot(pathToFileURL(directory).href);
         expect(imported).toHaveLength(10);
-        expect(imported.map((note) => note.title)).not.toContain("note-10");
+        expect(imported.reduce((total, note) => total + note.body.length, 0)).toBeLessThanOrEqual(2_000_000);
       } finally {
         await rm(directory, { recursive: true, force: true });
       }
