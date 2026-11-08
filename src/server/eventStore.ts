@@ -2,33 +2,43 @@ import type { EventStore } from "@modelcontextprotocol/sdk/server/streamableHttp
 import type { JSONRPCMessage } from "@modelcontextprotocol/sdk/types.js";
 
 /**
- * Resumability for the Streamable HTTP transport.
- *
- * When a client's connection drops mid-stream (flaky wifi, a laptop closing,
- * a load balancer timing out), it can reconnect with a `Last-Event-ID` header
- * instead of starting over. The transport calls `replayEventsAfter` to figure
- * out what the client already saw and resend only what's missing.
- *
- * This implementation is deliberately the simplest thing that works: an
- * in-memory Map. It's perfect for local development and for understanding the
- * mechanism, but every event is lost on restart and it never evicts old
- * entries. A production deployment would back this with Redis/Postgres and
- * add TTL-based cleanup.
+ * Bounded in-memory resumability store for local/demo deployments.
+ * Events expire after 15 minutes and the store retains at most 10,000 events.
+ * This is not durable or shared across replicas; production deployments should
+ * use a shared store with equivalent TTL and capacity policies.
  */
+const EVENT_TTL_MS = 15 * 60 * 1000;
+const MAX_EVENTS = 10_000;
+
+interface StoredEvent {
+  streamId: string;
+  message: JSONRPCMessage;
+  storedAt: number;
+}
+
 export class InMemoryEventStore implements EventStore {
-  private events = new Map<string, { streamId: string; message: JSONRPCMessage }>();
+  private events = new Map<string, StoredEvent>();
 
   private generateEventId(streamId: string): string {
     return `${streamId}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
   }
 
-  private streamIdFromEventId(eventId: string): string {
-    return eventId.split("_")[0] ?? "";
+  private pruneExpired(now = Date.now()): void {
+    for (const [id, event] of this.events) {
+      if (now - event.storedAt > EVENT_TTL_MS) this.events.delete(id);
+    }
   }
 
   async storeEvent(streamId: string, message: JSONRPCMessage): Promise<string> {
+    this.pruneExpired();
     const eventId = this.generateEventId(streamId);
-    this.events.set(eventId, { streamId, message });
+    this.events.set(eventId, { streamId, message, storedAt: Date.now() });
+
+    while (this.events.size > MAX_EVENTS) {
+      const oldest = this.events.keys().next().value as string | undefined;
+      if (oldest === undefined) break;
+      this.events.delete(oldest);
+    }
     return eventId;
   }
 
@@ -36,20 +46,19 @@ export class InMemoryEventStore implements EventStore {
     lastEventId: string,
     { send }: { send: (eventId: string, message: JSONRPCMessage) => Promise<void> }
   ): Promise<string> {
-    if (!lastEventId || !this.events.has(lastEventId)) return "";
-
-    const streamId = this.streamIdFromEventId(lastEventId);
-    if (!streamId) return "";
+    this.pruneExpired();
+    const lastEvent = this.events.get(lastEventId);
+    if (!lastEvent) return "";
 
     let pastLastEvent = false;
-    for (const [eventId, { streamId: eventStreamId, message }] of this.events) {
-      if (eventStreamId !== streamId) continue;
+    for (const [eventId, event] of this.events) {
+      if (event.streamId !== lastEvent.streamId) continue;
       if (eventId === lastEventId) {
         pastLastEvent = true;
         continue;
       }
-      if (pastLastEvent) await send(eventId, message);
+      if (pastLastEvent) await send(eventId, event.message);
     }
-    return streamId;
+    return lastEvent.streamId;
   }
 }
