@@ -131,12 +131,13 @@ describe("NotesStore", () => {
     it("imports supported files but enforces the aggregate root byte limit", async () => {
       const directory = await mkdtemp(path.join(tmpdir(), "devnotes-root-"));
       try {
-        await writeFile(path.join(directory, "first.md"), "a".repeat(150_000));
-        await writeFile(path.join(directory, "second.txt"), "b".repeat(150_000));
+        for (let index = 0; index < 11; index++) {
+          await writeFile(path.join(directory, `note-${index}.md`), "x".repeat(200_000));
+        }
         await writeFile(path.join(directory, "ignored.json"), "{}");
         const imported = await store.importFromRoot(pathToFileURL(directory).href);
-        expect(imported).toHaveLength(1);
-        expect(imported[0]!.title).toBe("first");
+        expect(imported).toHaveLength(10);
+        expect(imported.map((note) => note.title)).not.toContain("note-10");
       } finally {
         await rm(directory, { recursive: true, force: true });
       }
