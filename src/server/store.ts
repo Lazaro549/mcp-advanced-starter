@@ -23,6 +23,7 @@ export interface Note {
 const NOTE_FILE_EXTENSIONS = new Set([".md", ".markdown", ".txt"]);
 const MAX_FILES_PER_ROOT = 200;
 const MAX_FILE_BYTES = 200_000;
+const MAX_TOTAL_BYTES_PER_ROOT = 2_000_000;
 
 /**
  * A tiny in-memory notes store. Not persistent, not concurrent-safe beyond a
@@ -91,7 +92,13 @@ export class NotesStore {
     rootUri: string,
     onFile?: (fileName: string, index: number, total: number) => Promise<void> | void
   ): Promise<Note[]> {
-    if (!rootUri.startsWith("file://")) {
+    let rootUrl: URL;
+    try {
+      rootUrl = new URL(rootUri);
+    } catch {
+      throw new Error(`Invalid root URI: ${rootUri}`);
+    }
+    if (rootUrl.protocol !== "file:") {
       throw new Error(`Only file:// roots are supported, got: ${rootUri}`);
     }
 
@@ -102,13 +109,16 @@ export class NotesStore {
       .slice(0, MAX_FILES_PER_ROOT);
 
     const imported: Note[] = [];
+    let totalBytes = 0;
     for (let i = 0; i < candidates.length; i++) {
       const entry = candidates[i]!;
       const fullPath = path.join(rootPath, entry.name);
       const stats = await stat(fullPath);
-      if (stats.size > MAX_FILE_BYTES) continue;
+      if (!stats.isFile() || stats.size > MAX_FILE_BYTES) continue;
+      if (totalBytes + stats.size > MAX_TOTAL_BYTES_PER_ROOT) continue;
 
       const body = await readFile(fullPath, "utf8");
+      totalBytes += stats.size;
       const note = this.create({
         title: entry.name.replace(path.extname(entry.name), ""),
         body,

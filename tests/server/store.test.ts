@@ -1,4 +1,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
+import { mkdtemp, writeFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { NotesStore } from "../../src/server/store.js";
 
 describe("NotesStore", () => {
@@ -118,6 +122,25 @@ describe("NotesStore", () => {
   describe("importFromRoot", () => {
     it("rejects non-file roots before touching the filesystem", async () => {
       await expect(store.importFromRoot("https://example.com/notes")).rejects.toThrow("file://");
+    });
+
+    it("rejects malformed root URIs", async () => {
+      await expect(store.importFromRoot("not a uri")).rejects.toThrow("Invalid root URI");
+    });
+
+    it("imports supported files but enforces the aggregate root byte limit", async () => {
+      const directory = await mkdtemp(path.join(tmpdir(), "devnotes-root-"));
+      try {
+        for (let index = 0; index < 11; index++) {
+          await writeFile(path.join(directory, `note-${index}.md`), "x".repeat(200_000));
+        }
+        await writeFile(path.join(directory, "ignored.json"), "{}");
+        const imported = await store.importFromRoot(pathToFileURL(directory).href);
+        expect(imported).toHaveLength(10);
+        expect(imported.reduce((total, note) => total + note.body.length, 0)).toBeLessThanOrEqual(2_000_000);
+      } finally {
+        await rm(directory, { recursive: true, force: true });
+      }
     });
   });
 });
