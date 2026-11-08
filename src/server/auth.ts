@@ -85,7 +85,9 @@ export class DemoInMemoryAuthProvider implements OAuthServerProvider {
 
   async challengeForAuthorizationCode(client: OAuthClientInformationFull, authorizationCode: string): Promise<string> {
     const stored = this.codes.get(authorizationCode);
-    if (!stored) throw new Error("Invalid authorization code");
+    if (!stored || stored.client.client_id !== client.client_id) {
+      throw new Error("Invalid authorization code");
+    }
     return stored.params.codeChallenge;
   }
 
@@ -130,7 +132,8 @@ export class DemoInMemoryAuthProvider implements OAuthServerProvider {
 
   async verifyAccessToken(token: string): Promise<AuthInfo> {
     const stored = this.tokens.get(token);
-    if (!stored || stored.expiresAt < Date.now()) {
+    if (!stored || stored.expiresAt <= Date.now()) {
+      this.tokens.delete(token);
       throw new Error("Invalid or expired token");
     }
     return {
