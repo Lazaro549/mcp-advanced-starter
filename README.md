@@ -8,8 +8,8 @@ Follow-up project for Anthropic Academy's *Model Context Protocol: Advanced Topi
 
 <img src="assets/certificate.png" alt="Certificate of completion — Model Context Protocol: Advanced Topics — Lazaro Gomez Vitolo" width="600">
 <img src="assets/client.png" width="940" Height="200 ">
-<img src="" width="940" Height="200 ">
-</div>
+<img src="assets/inspector.png" alt="MCP Inspector" width="100%">
+
 
 ## 🎓 What this is
 
